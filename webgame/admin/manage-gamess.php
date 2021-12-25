@@ -3,7 +3,8 @@
 <?php 
 //Delete    
 $msg=0;
-if($_GET==null){
+
+if($_GET==null || $_GET['search'] || $_GET['search']==''){
 
 }else if($_GET['action']=='del' && $_GET['rid'])
     {
@@ -11,7 +12,6 @@ if($_GET==null){
         $query=mysqli_query($con,"update games set is_Active='0' where id='$id'");
         $msg="Xóa thành công! ";
     }
-
     require "Classes/PHPExcel.php";
     if(isset($_POST['btnnhap'])) {
         $checkNull = $_FILES['file']['error'];
@@ -111,7 +111,7 @@ if($_GET==null){
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                         </svg></button></a>
-                        <a href="ghi-file.php" ><button class="btn btn-success" style="margin-bottom: 10px;background-color:#67d396;border:none;">Xuất File&nbsp;&nbsp;<svg style="padding-top: 8px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <a href="ghi-file.php" ><button class="btn btn-success" style="margin-bottom: 10px;background-color:#67d396;border:none;display:inline-block">Xuất File&nbsp;&nbsp;<svg style="padding-top: 8px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                         </svg></button></a>
@@ -143,8 +143,8 @@ if($_GET==null){
                                 </thead>
                                 <tbody>
                                 <?php 
-
-                                $query=mysqli_query($con,"Select * from games g join category c on g.IdCategory = c.IdCategory where g.is_Active=1;");
+                                $search = addslashes($_GET['search']);
+                                $query=mysqli_query($con,"Select * from games g join category c on g.IdCategory = c.IdCategory where name like '%$search%' and g.is_Active=1;");
                                 $stt=1;
                                 while($row=mysqli_fetch_array($query))
                                 {
