@@ -1,2 +1,1 @@
-# web-ban-game fix 6
-
+# web-ban-game fix 7
